@@ -3,14 +3,12 @@ services:
   python:
     image: osioaliu/python:${PY_VERSION}
     container_name: ${NAMESPACE}_python
-    build:
-      context: .docker/python
-      args:
-        PY_VERSION: ${PY_VERSION}
+#    build:
+#      context: .docker/python
+#      args:
+#        PY_VERSION: ${PY_VERSION}
     working_dir: /usr/src/app
-    command: bash -c "pip install --no-cache-dir -r requirements.txt && tail -f /dev/null"
-    tty: true
-    ports:
-      - "80:80"
+    command: bash -c 
+      - "pip install -r requirements.txt"
     volumes:
       - ./src:/usr/src/app
