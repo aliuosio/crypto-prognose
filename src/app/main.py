@@ -98,8 +98,8 @@ class DataAnalysisApp:
 # Main Execution
 if __name__ == "__main__":
     symbol = "SOLUSDT"
-    interval = "1h"
-    limit = 120
+    interval = "30m"
+    limit = 240
     rsi_window = 14
     output_file = "solana_data.csv"
 
