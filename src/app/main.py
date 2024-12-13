@@ -1,7 +1,9 @@
 import requests
 import pandas as pd
+import pytz
 from datetime import datetime
 from ta.momentum import RSIIndicator
+
 
 # Abstract API Service
 class ApiService:
@@ -9,6 +11,7 @@ class ApiService:
         response = requests.get(url, params=params)
         response.raise_for_status()
         return response.json()
+
 
 # Concrete Binance API Service
 class BinanceApiService(ApiService):
@@ -26,7 +29,10 @@ class BinanceApiService(ApiService):
             "taker_buy_base_volume", "taker_buy_quote_volume", "ignore"
         ])
         df = df[["timestamp", "open", "high", "low", "close", "volume"]]
+
+        # Convert timestamp to German timezone (CET/CEST)
         df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms")
+        df["timestamp"] = df["timestamp"].dt.tz_localize('UTC').dt.tz_convert('Europe/Berlin')  # German timezone
         df["close"] = df["close"].astype(float)
         return df
 
@@ -37,8 +43,13 @@ class BinanceApiService(ApiService):
 
         df = pd.DataFrame(data)
         df["fundingTime"] = pd.to_datetime(df["fundingTime"], unit="ms")
+
+        # Convert funding time to German timezone (CET/CEST)
+        df["fundingTime"] = df["fundingTime"].dt.tz_localize('UTC').dt.tz_convert('Europe/Berlin')
+
         df["fundingRate"] = df["fundingRate"].astype(float)
         return df
+
 
 # RSI Calculator (SRP)
 class RsiCalculator:
@@ -47,6 +58,7 @@ class RsiCalculator:
         df["RSI"] = rsi.rsi()
         return df
 
+
 # Data Merger (SRP)
 class DataMerger:
     def merge(self, *dataframes, on, how="left"):
@@ -54,6 +66,7 @@ class DataMerger:
         for df in dataframes[1:]:
             merged_df = merged_df.join(df, on=on, how=how)
         return merged_df
+
 
 # Application Layer
 class DataAnalysisApp:
@@ -81,11 +94,12 @@ class DataAnalysisApp:
         combined_data.to_csv(output_file)
         print(f"Data saved to {output_file}")
 
+
 # Main Execution
 if __name__ == "__main__":
     symbol = "SOLUSDT"
     interval = "1h"
-    limit = 500
+    limit = 120
     rsi_window = 14
     output_file = "solana_data.csv"
 
