@@ -30,9 +30,11 @@ class BinanceApiService(ApiService):
         ])
         df = df[["timestamp", "open", "high", "low", "close", "volume"]]
 
-        # Convert timestamp to German timezone (CET/CEST)
+        # Convert timestamp to German timezone (CET/CEST) and format it
         df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms")
-        df["timestamp"] = df["timestamp"].dt.tz_localize('UTC').dt.tz_convert('Europe/Berlin')  # German timezone
+        df["timestamp"] = df["timestamp"].dt.tz_localize('UTC').dt.tz_convert('Europe/Berlin')
+        df["timestamp"] = df["timestamp"].dt.strftime('%Y-%m-%d %H:%M')
+
         df["close"] = df["close"].astype(float)
         return df
 
@@ -44,12 +46,12 @@ class BinanceApiService(ApiService):
         df = pd.DataFrame(data)
         df["fundingTime"] = pd.to_datetime(df["fundingTime"], unit="ms")
 
-        # Convert funding time to German timezone (CET/CEST)
+        # Convert funding time to German timezone (CET/CEST) and format it
         df["fundingTime"] = df["fundingTime"].dt.tz_localize('UTC').dt.tz_convert('Europe/Berlin')
+        df["fundingTime"] = df["fundingTime"].dt.strftime('%Y-%m-%d %H:%M')
 
         df["fundingRate"] = df["fundingRate"].astype(float)
         return df
-
 
 # RSI Calculator (SRP)
 class RsiCalculator:
