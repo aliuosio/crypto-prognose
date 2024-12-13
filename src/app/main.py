@@ -35,7 +35,12 @@ class BinanceApiService(ApiService):
         df["timestamp"] = df["timestamp"].dt.tz_localize('UTC').dt.tz_convert('Europe/Berlin')
         df["timestamp"] = df["timestamp"].dt.strftime('%Y-%m-%d %H:%M')
 
+        # Convert data types and format volume
+        df["open"] = df["open"].astype(float).round(2)
+        df["high"] = df["high"].astype(float).round(2)
+        df["low"] = df["low"].astype(float).round(2)
         df["close"] = df["close"].astype(float)
+        df["volume"] = df["volume"].astype(float).apply(lambda x: f"{x:,.2f}")
         return df
 
     def fetch_funding_rate(self, symbol):
@@ -53,11 +58,12 @@ class BinanceApiService(ApiService):
         df["fundingRate"] = df["fundingRate"].astype(float)
         return df
 
+
 # RSI Calculator (SRP)
 class RsiCalculator:
     def calculate(self, df, window):
         rsi = RSIIndicator(df["close"], window=window)
-        df["RSI"] = rsi.rsi()
+        df["RSI"] = rsi.rsi().round(2)  # Round RSI to 2 decimal places
         return df
 
 
@@ -93,7 +99,7 @@ class DataAnalysisApp:
         combined_data = self.data_merger.merge(price_data, funding_data, on="timestamp")
 
         print("Saving data to CSV...")
-        combined_data.to_csv(output_file)
+        combined_data.to_csv(output_file, float_format="%.2f")  # Save with rounded floats
         print(f"Data saved to {output_file}")
 
 
