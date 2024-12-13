@@ -1,1 +1,2 @@
-/src/solana_data.csv
+/src/*.csv
+/src/*.png
