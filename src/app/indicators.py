@@ -1,12 +1,29 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
+import glob
 
 # Load data from CSV file
-try:
-    df = pd.read_csv('solana_data.csv')
-except FileNotFoundError:
-    print("The file 'solana_data.csv' was not found. Please check the file path.")
+data_folder = 'data'
+csv_files = glob.glob(os.path.join(data_folder, '*.csv'))
+
+if not csv_files:
+    print(f"No CSV files found in the '{data_folder}' folder. Please check the folder path or add CSV files.")
     exit()
+
+df_list = []
+for file in csv_files:
+    try:
+        temp_df = pd.read_csv(file)
+        df_list.append(temp_df)
+    except Exception as e:
+        print(f"Error reading file {file}: {e}")
+
+if not df_list:
+    print("No valid data could be loaded from the CSV files.")
+    exit()
+
+df = pd.concat(df_list, ignore_index=True)
 
 # Check if necessary columns exist
 required_columns = ['timestamp', 'close', 'RSI']
@@ -46,7 +63,10 @@ plt.title(f"Closing Prices and RSI (Avg Close: {avg_close:.2f}, Avg RSI: {avg_rs
 plt.tight_layout()
 
 # Save plot to file (instead of showing it)
-plt.savefig('solana_plot.png')
+plot_folder = 'plots'
+os.makedirs(plot_folder, exist_ok=True)
+plot_filename = os.path.join(plot_folder, os.path.splitext(os.path.basename(file))[0] + '.png')
+plt.savefig(plot_filename)
 
-# Optionally, print a success message
-print("Plot saved as 'solana_plot.png'.")
+# Output the name of the file created
+print(f"Plot saved as '{plot_filename}'.")
