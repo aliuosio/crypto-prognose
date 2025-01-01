@@ -1,3 +1,4 @@
 /src/*.csv
 /src/*.png
 /src/data/
+/src/plots/
