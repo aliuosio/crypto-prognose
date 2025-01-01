@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import pytz
+import os
 from datetime import datetime
 from ta.momentum import RSIIndicator
 
@@ -85,13 +86,19 @@ class DataAnalysisApp:
 
     def run(self, symbol, interval, limit, rsi_window, output_file):
         print("Fetching historical data...")
-        price_data = self.api_service.fetch_historical_data(symbol, interval, limit)
+        try:
+            price_data = self.api_service.fetch_historical_data(symbol, interval, limit)
+        except Exception:
+            raise ValueError("Error: Unable to fetch data for the provided symbol.")
 
         print("Calculating RSI...")
         price_data = self.rsi_calculator.calculate(price_data, rsi_window)
 
         print("Fetching funding rate data...")
-        funding_data = self.api_service.fetch_funding_rate(symbol)
+        try:
+            funding_data = self.api_service.fetch_funding_rate(symbol)
+        except Exception:
+            raise ValueError("Error: Unable to fetch funding rate for the provided symbol.")
 
         print("Merging data...")
         price_data.set_index("timestamp", inplace=True)
@@ -105,17 +112,22 @@ class DataAnalysisApp:
 
 # Main Execution
 if __name__ == "__main__":
-    symbol = "SOLUSDT"
+    symbol = input("Enter the cryptocurrency symbol (e.g., BTCUSDT): ")
+
     interval = "30m"
     limit = 240
     rsi_window = 14
-    output_file = "solana_data.csv"
+    output_file = os.path.join("data", f"{symbol.lower()}_data.csv")
 
     # Instantiate dependencies
     api_service = BinanceApiService()
     rsi_calculator = RsiCalculator()
     data_merger = DataMerger()
 
+    # Ensure the "data" folder exists
+    if not os.path.exists("data"):
+        os.makedirs("data")
+    
     # Run the application
     app = DataAnalysisApp(api_service, rsi_calculator, data_merger)
     app.run(symbol, interval, limit, rsi_window, output_file)
