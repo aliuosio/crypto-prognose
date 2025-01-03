@@ -23,9 +23,15 @@ Before running the script, ensure you have the following installed:
 
 ### Usage
     
-    # create CSV
+Get Data and create CSV
+
     python app/main.py 
 
-    # create plot from CSV
-    python app/indicators.py
+create plot from CSV
+
+    python app/plot.py
+
+make predictions after running 
+
+    pyton app/predict.py
     
