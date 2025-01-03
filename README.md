@@ -1,4 +1,4 @@
-## Binance Data Analysis Script
+## Binance Cryptocurrency Data Analysis and Prediction Script
 This repository contains a Python script to fetch, process, and analyze cryptocurrency data from Binance. It retrieves historical price data and funding rates, calculates the Relative Strength Index (RSI), and merges the data into a single dataset for analysis. The processed data is then saved as a CSV file.
 
 ### Features
@@ -9,6 +9,7 @@ This repository contains a Python script to fetch, process, and analyze cryptocu
 * Convert timestamps to German timezone (Europe/Berlin) in the format YYYY-MM-DD HH:MM.
 * Save the combined data into a CSV file.
 * **Plot for Price and RSI Development**
+* **make predictions using the gained data**
 
 ### Requirements
 Before running the script, ensure you have the following installed:
