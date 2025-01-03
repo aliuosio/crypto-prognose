@@ -61,6 +61,10 @@ Before running the script, ensure you have the following installed:
     docker compose exec -it python bash
 
 ### Usage
+
+Get Requirements
+    
+    pip install -r requirements.txt
     
 Get Data and create CSV
 
