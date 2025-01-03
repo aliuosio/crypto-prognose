@@ -5,6 +5,7 @@ cycler==0.12.1
 fonttools==4.55.3
 idna==3.10
 kiwisolver==1.4.7
+LinearRegression==0.0.1
 matplotlib==3.9.3
 numpy==2.2.0
 packaging==24.2
