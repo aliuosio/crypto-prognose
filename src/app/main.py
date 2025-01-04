@@ -114,7 +114,7 @@ class DataAnalysisApp:
 if __name__ == "__main__":
     symbol = input("Enter the cryptocurrency symbol (e.g., BTCUSDT): ")
 
-    interval = "30m"
+    interval = "15m"
     limit = 240
     rsi_window = 14
     output_file = os.path.join("data", f"{symbol.lower()}_data.csv")
