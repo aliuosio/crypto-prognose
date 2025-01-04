@@ -68,7 +68,7 @@ Get Requirements
     
 Get Data and create CSV
 
-    python app/main.py <currency> #e.g SOLUSDT
+    python app/main.py SOLUSDT #exchnage SOLUSDT with the coin of interest for eaxmpple BTCUSDT
 
 create plot from CSV
 
