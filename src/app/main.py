@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import pytz
 import os
+import sys
 from datetime import datetime
 from ta.momentum import RSIIndicator
 
@@ -112,9 +113,13 @@ class DataAnalysisApp:
 
 # Main Execution
 if __name__ == "__main__":
-    symbol = input("Enter the cryptocurrency symbol (e.g., BTCUSDT): ")
-
-    interval = "15m"
+    
+    if len(sys.argv) < 2:
+        raise ValueError("Error: Please provide the cryptocurrency symbol as a command-line argument (e.g., python main.py BTCUSDT).")
+    
+    symbol = sys.argv[1]
+    
+    interval = "30m"
     limit = 240
     rsi_window = 14
     output_file = os.path.join("data", f"{symbol.lower()}_data.csv")
