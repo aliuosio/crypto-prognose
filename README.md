@@ -68,13 +68,9 @@ Get Requirements
     
 Get Data and create CSV
 
-    python app/main.py 
+    python app/main.py <currency> e.g SOLUSDT
 
 create plot from CSV
 
     python app/plot.py
-
-make predictions after running 
-
-    pyton app/predict.py
     
