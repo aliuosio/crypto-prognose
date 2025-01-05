@@ -21,8 +21,6 @@
     docker compose logs -f
     docker compose exec -it python bash
 
-### Usage
-
 Get Requirements
     
     pip install -r requirements.txt
