@@ -12,7 +12,6 @@
 ### Usage
 
     docker compose up -d
-    docker compose logs -f
     docker compose exec -it python bash
 
 Get Requirements
