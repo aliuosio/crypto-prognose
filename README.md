@@ -9,12 +9,6 @@
 * Save the combined data and other results into CSV files.
 * Create plots for price and RSI development.
 
-### Docker Environment
-
-    docker compose up -d
-    docker compose logs -f
-    docker compose exec -it python bash
-
 ### Usage
 
     docker compose up -d
