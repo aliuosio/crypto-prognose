@@ -27,9 +27,10 @@ Get Requirements
     
 Get Data and create CSV
 
+
     Examples:
-    python app/main.py SOLUSDT
-    python app/main.py BTCUSDT
+    python app/main.py SOLUSDT 30m # Coin interval
+    python app/main.py BTCUSDT 15m
 
 create plot from CSV
 

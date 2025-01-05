@@ -114,12 +114,11 @@ class DataAnalysisApp:
 # Main Execution
 if __name__ == "__main__":
     
-    if len(sys.argv) < 2:
-        raise ValueError("Error: Please provide the cryptocurrency symbol as a command-line argument (e.g., python main.py BTCUSDT).")
+    if len(sys.argv) < 3:
+        raise ValueError("Error: Please provide the cryptocurrency symbol and interval as command-line arguments (e.g., python main.py BTCUSDT 15m).")
     
     symbol = sys.argv[1]
-    
-    interval = "30m"
+    interval = sys.argv[2]
     limit = 240
     rsi_window = 14
     output_file = os.path.join("data", f"{symbol.lower()}_data.csv")
