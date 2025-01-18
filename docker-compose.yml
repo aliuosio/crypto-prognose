@@ -1,7 +1,7 @@
 services:
 
   python:
-    image: osioaliu/python:${PY_VERSION}
+    image: osioaliu/crypto-prognose
     container_name: ${NAMESPACE}_python
 #    build:
 #      context: .docker/python
